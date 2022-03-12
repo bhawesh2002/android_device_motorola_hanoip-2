@@ -28,20 +28,21 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 PRODUCT_NAME := lineage_hanoip
 PRODUCT_DEVICE := hanoip
 PRODUCT_BRAND := motorola
-PRODUCT_MODEL := moto g(60)
+PRODUCT_MODEL := Motorola G(60)
 PRODUCT_MANUFACTURER := motorola
+PRODUCT_SHIPPING_API_LEVEL := 30
 
-PRODUCT_AAPT_CONFIG := xxxhdpi
-PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
+PRODUCT_AAPT_CONFIG := normal
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 2460
 TARGET_SCREEN_WIDTH := 1080
 
 # Build info
-BUILD_FINGERPRINT := "motorola/hanoip_retail/hanoip:11/RRI31.Q1-42-48/222fd:user/release-keys"
+BUILD_FINGERPRINT := "motorola/hanoip_retcn/hanoip:11/RRN31.Q3-1-11-6/f81cc:user/release-keys"
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME=hanoip_retail \
-    PRIVATE_BUILD_DESC="hanoip_retail-user 11 RRI31.Q1-42-48 222fd release-keys"
+    PRODUCT_NAME=hanoip_retcn \
+    PRIVATE_BUILD_DESC="hanoip_retcn-user 11 RRN31.Q3-1-11-6 f81cc release-keys"
 
 PRODUCT_GMS_CLIENTID_BASE := android-motorola
