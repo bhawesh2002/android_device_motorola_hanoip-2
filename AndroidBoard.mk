@@ -19,7 +19,7 @@ recovery_uncompressed_ramdisk := $(PRODUCT_OUT)/ramdisk-recovery.cpio
 
 RECOVERY_KMOD_TARGETS := \
     aw8624.ko \
-    qpnp-smbcharger-mmi.ko \
+    mpq-adapter.ko \
     qpnp_adaptive_charge.ko \
     ilitek_v3_mmi.ko \
     sensors_class.ko
