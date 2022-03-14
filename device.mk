@@ -236,18 +236,23 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
+    android.hardware.graphics.composer@2.4-service \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
     android.hardware.graphics.mapper@4.0-impl-qti-display \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-    gralloc.kona \
+    gralloc.sm6150 \
+    hwcomposer.sm6150 \
+    libdisplayconfig \
     libdisplayconfig.qti \
+    libdisplayconfig.vendor \
     libqdMetaData \
     libqdMetaData.system \
-    memtrack.kona \
+    libtinyxml \
+    libvulkan \
+    memtrack.sm6150 \
     vendor.display.config@1.15.vendor \
     vendor.qti.hardware.display.allocator-service \
-    vendor.qti.hardware.display.composer-service \
     vendor.qti.hardware.display.mapper@1.1.vendor \
     vendor.qti.hardware.display.mapper@2.0.vendor \
     vendor.qti.hardware.display.mapper@3.0.vendor \
