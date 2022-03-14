@@ -57,11 +57,11 @@ TARGET_KERNEL_CLANG_COMPILE := true
 
 # Kernel modules - Audio
 TARGET_MODULE_ALIASES += \
-    adsp_loader_dlkm.ko:audio_adsp_loader.ko \
+     adsp_loader_dlkm.ko:audio_adsp_loader.ko \
     apr_dlkm.ko:audio_apr.ko \
     bolero_cdc_dlkm.ko:audio_bolero_cdc.ko \
     hdmi_dlkm.ko:audio_hdmi.ko \
-    machine_dlkm.ko:audio_machine_kona.ko \
+    machine_dlkm.ko:audio_machine_talos.ko \
     mbhc_dlkm.ko:audio_mbhc.ko \
     native_dlkm.ko:audio_native.ko \
     pinctrl_lpi_dlkm.ko:audio_pinctrl_lpi.ko \
@@ -78,31 +78,38 @@ TARGET_MODULE_ALIASES += \
     tx_macro_dlkm.ko:audio_tx_macro.ko \
     usf_dlkm.ko:audio_usf.ko \
     va_macro_dlkm.ko:audio_va_macro.ko \
-    wcd938x_dlkm.ko:audio_wcd938x.ko \
-    wcd938x_slave_dlkm.ko:audio_wcd938x_slave.ko \
+    wcd934x_dlkm.ko:audio_wcd934x.ko \
+    wcd937x_dlkm.ko:audio_wcd937x.ko \
+    wcd937x_slave_dlkm.ko:audio_wcd937x_slave.ko \
     wcd9xxx_dlkm.ko:audio_wcd9xxx.ko \
     wcd_core_dlkm.ko:audio_wcd_core.ko \
+    wcd_spi_dlkm.ko:audio_wcd_spi.ko \
+    wglink_dlkm.ko:audio_wglink.ko \
     wsa881x_dlkm.ko:audio_wsa881x.ko \
     wsa_macro_dlkm.ko:audio_wsa_macro.ko
 
 # Kernel modules - WLAN
 TARGET_MODULE_ALIASES += \
-    wlan.ko:qca_cld3_qca6390.ko
+     wlan.ko:qca_cld3_wlan.ko
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
-TARGET_BOARD_PLATFORM := kona
-TARGET_FWK_SUPPORTS_FULL_VALUEADDS := true
+QCOM_BOARD_PLATFORMS += sm6150
+TARGET_BOARD_PLATFORM := sm6150
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno620
+TARGET_USES_QCOM_BSP := true
 
 # Audio
-AUDIO_FEATURE_ENABLED_DLKM := true
-AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT := true
-AUDIO_FEATURE_ENABLED_GEF_SUPPORT := true
+AUDIO_FEATURE_ENABLED_AAC_ADTS_OFFLOAD := true
+AUDIO_FEATURE_ENABLED_AUDIOSPHERE := true
+AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := true
+AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
+AUDIO_FEATURE_ENABLED_FM_POWER_OPT := true
+AUDIO_FEATURE_ENABLED_HDMI_SPK := true
 AUDIO_FEATURE_ENABLED_INSTANCE_ID := true
 AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
-BOARD_SUPPORTS_OPENSOURCE_STHAL := true
-BOARD_SUPPORTS_SOUND_TRIGGER := true
 BOARD_USES_ALSA_AUDIO := true
+BOARD_SUPPORTS_SOUND_TRIGGER := true
 USE_CUSTOM_AUDIO_POLICY := 1
 USE_XML_AUDIO_POLICY_CONF := 1
 
@@ -155,8 +162,8 @@ BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 
 BOARD_USES_METADATA_PARTITION := true
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x06000000
-BOARD_DTBOIMG_PARTITION_SIZE := 0x1800000
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -178,7 +185,7 @@ BOARD_MOT_DP_GROUP_PARTITION_LIST := product system system_ext vendor
 BOARD_MOT_DP_GROUP_SIZE := 6441926650
 BOARD_SUPER_PARTITION_GROUPS := mot_dp_group
 BOARD_SUPER_PARTITION_SIZE := 12884901888
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 0x04000000
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 TARGET_COPY_OUT_PRODUCT := product
 TARGET_COPY_OUT_SYSTEM_EXT := system_ext
