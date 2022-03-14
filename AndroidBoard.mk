@@ -18,7 +18,7 @@ INSTALLED_KERNEL_TARGET := $(PRODUCT_OUT)/kernel
 recovery_uncompressed_ramdisk := $(PRODUCT_OUT)/ramdisk-recovery.cpio
 
 RECOVERY_KMOD_TARGETS := \
-    aw8624.ko \
+    aw8695.ko \
     mpq-adapter.ko \
     qpnp_adaptive_charge.ko \
     ilitek_v3_mmi.ko \
