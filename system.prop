@@ -154,3 +154,8 @@ ro.media.recorder-max-base-layer-fps = 60
 #Battery Property
 ro.charger.enable_suspend = 1
 
+# volte etc lines
+persist.dbg.ims_volte_enable=1 
+persist.dbg.volte_avail_ovr=1 
+persist.dbg.vt_avail_ovr=1
+persist.dbg.wfc_avail_ovr=1
