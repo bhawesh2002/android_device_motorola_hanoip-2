@@ -394,6 +394,9 @@ on post-fs-data
     #Create dir for TUI
     mkdir /data/vendor/tui 0700 system drmrpc
 
+    start vendor.dataqti
+    start vendor.dataadpl
+    
 service nqnfcinfo /system/vendor/bin/nqnfcinfo
     class late_start
     group nfc
@@ -862,10 +865,7 @@ service vendor.power_off_alarm /vendor/bin/power_off_alarm
     class core
     group system
     disabled
-    oneshot
-
-    start vendor.dataqti
-    start vendor.dataadpl
+    oneshot   
 
 service vendor.hbtp /vendor/bin/hbtp_daemon
      class main
