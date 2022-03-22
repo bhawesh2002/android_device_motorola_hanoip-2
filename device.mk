@@ -47,7 +47,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     FrameworksReshanoip \
-    SystemUIReshanoip
+    SystemUIReshanoip \
+    NoCutoutOverlay
 
 # A/B
 AB_OTA_UPDATER := true
