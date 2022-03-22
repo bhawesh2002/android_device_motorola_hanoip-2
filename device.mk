@@ -52,7 +52,7 @@ PRODUCT_PACKAGES += \
     init.mmi.overlay.rc \
     init.oem.fingerprint.sh \
     init.oem.fingerprint2.sh \
-		fstab.qcom_ramdisk
+    fstab.qcom_ramdisk
 
 # Lights
 PRODUCT_PACKAGES += \
