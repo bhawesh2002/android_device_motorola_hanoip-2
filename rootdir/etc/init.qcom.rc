@@ -864,6 +864,9 @@ service vendor.power_off_alarm /vendor/bin/power_off_alarm
     disabled
     oneshot
 
+    start vendor.dataqti
+    start vendor.dataadpl
+
 service vendor.hbtp /vendor/bin/hbtp_daemon
      class main
      user system
