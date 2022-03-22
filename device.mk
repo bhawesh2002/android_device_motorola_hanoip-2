@@ -43,13 +43,13 @@ PRODUCT_PACKAGES += \
     TelephonyResCommon \
     WifiResCommon \
     FrameworksResTarget \
-    WifiResTarget
+    WifiResTarget \
+    NoCutoutOverlay
 
 PRODUCT_PACKAGES += \
     FrameworksReshanoip \
     SystemUIReshanoip \
-    NoCutoutOverlay
-
+    
 # A/B
 AB_OTA_UPDATER := true
 
