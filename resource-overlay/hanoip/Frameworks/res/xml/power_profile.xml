@@ -26,7 +26,6 @@
         <value>6</value>
         <value>2</value>
     </array>
-    </array>
     <array name="cpu.core_speeds.cluster0">
         <value>300000</value>
         <value>576000</value>
