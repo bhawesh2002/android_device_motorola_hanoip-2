@@ -2,7 +2,7 @@
 # import /vendor/etc/init/hw/init.vendor.st21nfc.rc
 on early-init
    setprop ro.vendor.device_edition ${ro.boot.edition}
-   exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules qpnp-smbcharger-mmi qpnp_adaptive_charge nova_0flash_mmi
+   exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules snd_smartpa_aw882xx qpnp_adaptive_charge ilitek_v3_mmi
 
 on mmi-priority
    # Only high priority MMI DLKMs loaded here
@@ -15,11 +15,11 @@ on mmi-priority
 on fs
    # Majority of MMI DLKMs should be in this group
    setprop vendor.mmi_init.stage common
-   insmod /vendor/lib/modules/wl2864c.ko
+   insmod /vendor/lib/modules/qca_cld3_wlan.ko
    insmod /vendor/lib/modules/mmi_info.ko
    insmod /vendor/lib/modules/mmi_annotate.ko
    insmod /vendor/lib/modules/mmi_sys_temp.ko
-   insmod /vendor/lib/modules/qpnp-power-on-mmi.ko
+   insmod /vendor/lib/modules/mpq-adapter.ko
    insmod /vendor/lib/modules/mmi_annotate.ko
    insmod /vendor/lib/modules/mmi_info.ko
    insmod /vendor/lib/modules/tzlog_dump.ko

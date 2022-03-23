@@ -30,8 +30,6 @@ firmware_path=/vendor/firmware
 param_path=/data/vendor/param/touch
 factory_property=ro.vendor.build.motfactory
 bootmode_property=ro.bootmode
-touch_firmware_property=ro.vendor.touch.fw_version
-touch_vendor_property=ro.vendor.touch.supplier_vendor
 let dec_cfg_id_boot=0
 let dec_cfg_id_latest=0
 # Whether to search for TP firmware in the parameter path
@@ -58,7 +56,7 @@ debug()
 notice()
 {
 	echo "$*"
-	log -t "$scriptname" -p i "$*"
+	echo "$scriptname: $*" > /dev/kmsg
 }
 
 sanity_check()
@@ -214,11 +212,6 @@ setup_permissions()
 							key_path="/dev/"
 							key_files="gtp_tools"
 						fi
-						;;
-			   stmicro)	key_path="/proc/fts/"
-						key_files="driver_test"
-						# Set optional permissions to LSI touch tests
-						[ -f $touch_path/calibrate ] && chown root:vendor_tcmd $touch_path/calibrate
 						;;
 		esac
 		for entry in $key_files; do
@@ -378,8 +371,6 @@ query_panel_info()
 		read_panel_property "controller_drv_ver"
 		panel_ver=${property#${property%?}}
 		debug "panel supplier: $supplier, ver $panel_ver"
-		setprop $touch_vendor_property "$supplier-$touch_vendor"
-		notice "touch_vendor_property = $touch_vendor_property, $supplier-$touch_vendor"
 	else
 		debug "driver does not report panel supplier"
 	fi
@@ -458,9 +449,8 @@ run_firmware_upgrade()
 		echo 1 > $touch_path/forcereflash
 		debug "sending reflash command"
 		if [ "$find_in_param" == "1" ]; then
-			notice "Start touchUpg service, upgrade tp firmware parameters"
+			notice "Upgrade tp firmware parameters"
 			echo 1 > $touch_path/flash_mode
-			start vendor.touchUpg
 		else
 			echo 0 > $touch_path/flash_mode
 		fi
@@ -592,9 +582,6 @@ process_touch_instance()
 		notice "property [$touch_status_prop] set to [`getprop $touch_status_prop`]"
 		notice "Handling touch ID [$touch_instance] permissions"
 	fi
-	read_touch_property buildid
-	setprop $touch_firmware_property ${property}
-	notice "Touch firmware property is $touch_firmware_property"
 	setup_permissions
 }
 

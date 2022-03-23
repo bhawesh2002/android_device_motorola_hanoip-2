@@ -181,7 +181,7 @@ debug()
 notice()
 {
 	echo "$*"
-	log -t "$scriptname" -p i "$*"
+	echo "$scriptname: $*" > /dev/kmsg
 }
 
 add_device_params()
@@ -720,7 +720,7 @@ if [ "$xml_version" != "$version_fs" ]; then
 	[ -d $hw_mp/$ver_utag ] && $(echo "$xml_version" > $hw_mp/$ver_utag/ascii)
 fi
 
-# set_ro_vendor_incremental &
+set_ro_vendor_incremental &
 
 set_ro_hw_properties
 
@@ -732,4 +732,3 @@ wait
 
 notice "script init.oem.hw.sh finish "
 return 0
-

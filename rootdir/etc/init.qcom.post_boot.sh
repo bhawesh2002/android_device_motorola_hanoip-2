@@ -29,201 +29,51 @@
 
 function 8953_sched_dcvs_eas()
 {
-    if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-        #governor settings
-        echo 1 > /sys/devices/system/cpu/cpu0/online
-        echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 1401600 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8953 and sdm450 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_load
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
-
-        echo 652800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-
-        #input boost params
-        echo 1401600 > /sys/module/cpu_boost/parameters/input_boost_freq
-        echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-
-        # sched_load_boost as -6 is equivalent to target load as 85. It is per cpu tunable.
-        echo -6 >  /sys/devices/system/cpu/cpu0/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu1/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu2/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu3/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu4/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu5/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu6/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu7/sched_load_boost
-
-        # Enable bus-dcvs
-        for device in /sys/devices/platform/soc
-        do
-            for cpubw in $device/*cpu-cpu-ddr-bw/devfreq/*cpu-cpu-ddr-bw
-            do
-                echo "bw_hwmon" > $cpubw/governor
-                echo 85 > $cpubw/bw_hwmon/io_percent
-                echo 0 > $cpubw/bw_hwmon/guard_band_mbps
-            done
-        done
-    else
-        #governor settings
-        echo 1 > /sys/devices/system/cpu/cpu0/online
-        echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 1401600 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8953 and sdm450 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
-
-        echo 652800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-
-    fi
+    #governor settings
+    echo 1 > /sys/devices/system/cpu/cpu0/online
+    echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
+    #set the hispeed_freq
+    echo 1401600 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
+    #default value for hispeed_load is 90, for 8953 and sdm450 it should be 85
+    echo 85 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
 }
 
 function 8917_sched_dcvs_eas()
 {
-    if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-        #governor settings
-        echo 1 > /sys/devices/system/cpu/cpu0/online
-        echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 1094400 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8917 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_load
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
-
-        echo 960000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-
-        #input boost params
-        echo 1094400 > /sys/module/cpu_boost/parameters/input_boost_freq
-        echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-
-        # sched_load_boost as -6 is equivalent to target load as 85. It is per cpu tunable.
-        echo -6 >  /sys/devices/system/cpu/cpu0/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu1/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu2/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu3/sched_load_boost
-
-        # Enable bus-dcvs
-        for device in /sys/devices/platform/soc
-        do
-            for cpubw in $device/*cpu-cpu-ddr-bw/devfreq/*cpu-cpu-ddr-bw
-            do
-                echo "bw_hwmon" > $cpubw/governor
-                echo 85 > $cpubw/bw_hwmon/io_percent
-                echo 0 > $cpubw/bw_hwmon/guard_band_mbps
-            done
-        done
-    else
-        #governor settings
-        echo 1 > /sys/devices/system/cpu/cpu0/online
-        echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 1094400 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8917 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
-
-        echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    fi
-
-    if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-        # memlat specific settings are moved to seperate file under
-        # device/target specific folder
-        setprop vendor.dcvs.prop 1
-    fi
+    #governor settings
+    echo 1 > /sys/devices/system/cpu/cpu0/online
+    echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
+    #set the hispeed_freq
+    echo 1094400 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
+    #default value for hispeed_load is 90, for 8917 it should be 85
+    echo 85 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
 }
 
 function 8937_sched_dcvs_eas()
 {
-    if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-        # enable governor for perf cluster
-        echo 1 > /sys/devices/system/cpu/cpu0/online
-        echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 1094400 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8937 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_load
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
+    # enable governor for perf cluster
+    echo 1 > /sys/devices/system/cpu/cpu0/online
+    echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+    #set the hispeed_freq
+    echo 1094400 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
+    #default value for hispeed_load is 90, for 8937 it should be 85
+    echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+    ## enable governor for power cluster
+    echo 1 > /sys/devices/system/cpu/cpu4/online
+    echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+    #set the hispeed_freq
+    echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
+    #default value for hispeed_load is 90, for 8937 it should be 85
+    echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
 
-        echo 960000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-
-        ## enable governor for power cluster
-        echo 1 > /sys/devices/system/cpu/cpu4/online
-        echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
-        #set the hispeed_freq
-        echo 768000 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8937 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_load
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
-        echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/rtg_boost_freq
-
-        echo 768000 > /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq
-
-        #input boost params
-        echo 109440 > /sys/module/cpu_boost/parameters/input_boost_freq
-        echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-
-        # sched_load_boost as -6 is equivalent to target load as 85. It is per cpu tunable.
-        echo -6 >  /sys/devices/system/cpu/cpu0/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu1/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu2/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu3/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu4/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu5/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu6/sched_load_boost
-        echo -6 >  /sys/devices/system/cpu/cpu7/sched_load_boost
-
-        # Enable bus-dcvs
-        for device in /sys/devices/platform/soc
-        do
-            for cpubw in $device/*cpu-cpu-ddr-bw/devfreq/*cpu-cpu-ddr-bw
-            do
-                echo "bw_hwmon" > $cpubw/governor
-                echo 85 > $cpubw/bw_hwmon/io_percent
-                echo 0 > $cpubw/bw_hwmon/guard_band_mbps
-            done
-        done
-    else
-        # enable governor for perf cluster
-        echo 1 > /sys/devices/system/cpu/cpu0/online
-        echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 1094400 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8937 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
-        ## enable governor for power cluster
-        echo 1 > /sys/devices/system/cpu/cpu4/online
-        echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-        echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
-        echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
-        #set the hispeed_freq
-        echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
-        #default value for hispeed_load is 90, for 8937 it should be 85
-        echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
-
-        echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-        echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-    fi
-
-    if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-        # memlat specific settings are moved to seperate file under
-        # device/target specific folder
-        setprop vendor.dcvs.prop 1
-    fi
 }
 
 function configure_automotive_sku_parameters() {
@@ -232,19 +82,12 @@ function configure_automotive_sku_parameters() {
     echo 1056000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
     echo 1171200 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_min_freq
     echo 1785600 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    echo 902400000  > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
-    echo 902400000  > /sys/class/devfreq/18321110.qcom,cpu4-cpu-l3-lat/min_freq
-    echo 902400000  > /sys/class/devfreq/18321110.qcom,cpu7-cpu-l3-lat/min_freq
-    echo 1612800000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
-    echo 1612800000 > /sys/class/devfreq/18321110.qcom,cpu4-cpu-l3-lat/max_freq
-    echo 1612800000 > /sys/class/devfreq/18321110.qcom,cpu7-cpu-l3-lat/max_freq
     echo 902400000  > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
     echo 902400000  > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/min_freq
     echo 902400000  > /sys/class/devfreq/soc\:qcom,cpu7-cpu-l3-lat/min_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/max_freq
     echo 1612800000 > /sys/class/devfreq/soc\:qcom,cpu7-cpu-l3-lat/max_freq
-
 #read feature id from nvram
 reg_val=`cat /sys/devices/platform/soc/780130.qfprom/qfprom0/nvmem | od -An -t d4`
 feature_id=$(((reg_val >> 20) & 0xFF))
@@ -262,50 +105,6 @@ elif [ $feature_id == 1 ]; then
 else
         echo "unknown feature_id value" $feature_id
 fi
-}
-
-function configure_automotive_sku_parameters_sa8195() {
-
-	#Setting the min supported frequencies
-        echo 1113600 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-        echo 1171200 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-        echo 940800000  > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
-        echo 940800000  > /sys/class/devfreq/18321110.qcom,cpu4-cpu-l3-lat/min_freq
-        echo 1651200000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
-        echo 1651200000 > /sys/class/devfreq/18321110.qcom,cpu4-cpu-l3-lat/max_freq
-	echo 940800000  > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
-        echo 940800000  > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/min_freq
-        echo 1651200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
-	echo 1651200000 > /sys/class/devfreq/soc\:qcom,cpu4-cpu-l3-lat/max_freq
-
-	#read feature id
-        reg_val=`cat /sys/devices/platform/soc/780130.qfprom/qfprom0/nvmem | od -An -t d4`
-        feature_id=$(((reg_val >> 20) & 0xFF))
-
-        #setting min gpu freq to 392  MHz
-        echo 4 > /sys/class/kgsl/kgsl-3d0/min_pwrlevel
-        if [ $feature_id == 0 ]; then
-                echo "feature_id is 0 for SA8195AA"
-
-                #setting max cpu freq to 2.496GHz
-                echo 2496000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-                #setting max gpu freq to 530 MHz
-                echo 3 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-		echo 1804 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
-        elif [ $feature_id == 1 ] || [ $feature_id == 2 ]; then
-                echo "feature_id is 1 for external SA8195AB"
-                echo "feature_id is 2 for internal SA8195AB"
-
-                #setting max cpu freq to 2.496GHz
-                echo 2496000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-                #setting max gpu freq to 670 MHz
-                echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-		echo 2092 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
-        elif [ $feature_id == 3 ]; then
-                echo "feature_id is 3 for external SA8195AC"
-        else
-                echo "unknown feature_id value" $feature_id
-        fi
 }
 
 function configure_sku_parameters() {
@@ -332,16 +131,12 @@ if [ $feature_id == 6 ]; then
 	echo 748800 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	echo 1017600 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	echo 1017600 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
-	echo 1017600000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/min_freq
-	echo 1017600000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
 	echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1017600000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
 	echo 3 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-	echo 1016 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
+	echo {class:ddr, res:capped, val: 1016} > /sys/kernel/debug/aop_send_message
 	setprop vendor.sku_identified 1
 	setprop vendor.sku_name "SA6145"
 elif [ $feature_id == 5 ]; then
@@ -362,16 +157,12 @@ elif [ $feature_id == 5 ]; then
 	echo 998400 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	echo 1708800 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	echo 1708800 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
-	echo 1363200000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/min_freq
-	echo 1363200000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
 	echo 2 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-	echo 1333 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
+	echo {class:ddr, res:capped, val: 1333} > /sys/kernel/debug/aop_send_message
 	setprop vendor.sku_identified 1
 	setprop vendor.sku_name "SA6150"
 elif [ $feature_id == 4 ] || [ $feature_id == 3 ]; then
@@ -392,16 +183,12 @@ elif [ $feature_id == 4 ] || [ $feature_id == 3 ]; then
 	echo 1593600 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	echo 1900800 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	echo 1900800 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
-	echo 1363200000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/min_freq
-	echo 1363200000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
 	echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-	echo 1555 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
+	echo {class:ddr, res:capped, val: 1555} > /sys/kernel/debug/aop_send_message
 	setprop vendor.sku_identified 1
 	setprop vendor.sku_name "SA6155"
 else
@@ -422,16 +209,12 @@ else
 	echo 1593600 > /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq
 	echo 1900800 > /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
 	echo 1900800 > /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/min_freq
-	echo 1363200000 > /sys/class/devfreq/18321110.qcom,cpu0-cpu-l3-lat/max_freq
-	echo 940800000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/min_freq
-	echo 1363200000 > /sys/class/devfreq/18321110.qcom,cpu6-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu0-cpu-l3-lat/max_freq
 	echo 940800000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/min_freq
 	echo 1363200000 > /sys/class/devfreq/soc\:qcom,cpu6-cpu-l3-lat/max_freq
 	echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-	echo 1555 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
+	echo {class:ddr, res:capped, val: 1555} > /sys/kernel/debug/aop_send_message
         setprop vendor.sku_identified 1
 	setprop vendor.sku_name "SA6155"
 fi
@@ -803,6 +586,12 @@ KernelVersionA=${KernelVersionStr:0:1}
 KernelVersionB=${KernelVersionS%.*}
 
 function configure_zram_parameters() {
+    # Moto huangzq2: Skip this if we are using zram from fstab.
+    using_zram_from_fstab=`getprop ro.boot.using_zram_from_fstab`
+    if [ "$using_zram_from_fstab" == "true" ]; then
+        return
+    fi
+
     MemTotalStr=`cat /proc/meminfo | grep MemTotal`
     MemTotal=${MemTotalStr:16:8}
 
@@ -925,7 +714,7 @@ function configure_memory_parameters() {
     # Set allocstall_threshold to 0 for all targets.
     #
 
-ProductName=`getprop ro.board.platform`
+ProductName=`getprop ro.product.name`
 low_ram=`getprop ro.config.low_ram`
 
 if [ "$ProductName" == "msmnile" ] || [ "$ProductName" == "kona" ] || [ "$ProductName" == "sdmshrike_au" ]; then
@@ -950,50 +739,55 @@ else
         fi
     else
 
-        # Read adj series and set adj threshold for PPR and ALMK.
-        # This is required since adj values change from framework to framework.
-        adj_series=`cat /sys/module/lowmemorykiller/parameters/adj`
-        adj_1="${adj_series#*,}"
-        set_almk_ppr_adj="${adj_1%%,*}"
+        set_almk_ppr_adj=360
+        if [ -f /sys/module/lowmemorykiller/parameters/adj ]; then
+            # Read adj series and set adj threshold for PPR and ALMK.
+            # This is required since adj values change from framework to framework.
+            adj_series=`cat /sys/module/lowmemorykiller/parameters/adj`
+            adj_1="${adj_series#*,}"
+            set_almk_ppr_adj="${adj_1%%,*}"
 
-        # PPR and ALMK should not act on HOME adj and below.
-        # Normalized ADJ for HOME is 6. Hence multiply by 6
-        # ADJ score represented as INT in LMK params, actual score can be in decimal
-        # Hence add 6 considering a worst case of 0.9 conversion to INT (0.9*6).
-        # For uLMK + Memcg, this will be set as 6 since adj is zero.
-        set_almk_ppr_adj=$(((set_almk_ppr_adj * 6) + 6))
-        echo $set_almk_ppr_adj > /sys/module/lowmemorykiller/parameters/adj_max_shift
+            # PPR and ALMK should not act on HOME adj and below.
+            # Normalized ADJ for HOME is 6. Hence multiply by 6
+            # ADJ score represented as INT in LMK params, actual score can be in decimal
+            # Hence add 6 considering a worst case of 0.9 conversion to INT (0.9*6).
+            # For uLMK + Memcg, this will be set as 6 since adj is zero.
+            set_almk_ppr_adj=$(((set_almk_ppr_adj * 6) + 6))
+            echo $set_almk_ppr_adj > /sys/module/lowmemorykiller/parameters/adj_max_shift
 
-        # Calculate vmpressure_file_min as below & set for 64 bit:
-        # vmpressure_file_min = last_lmk_bin + (last_lmk_bin - last_but_one_lmk_bin)
-        if [ "$arch_type" == "aarch64" ]; then
-            minfree_series=`cat /sys/module/lowmemorykiller/parameters/minfree`
-            minfree_1="${minfree_series#*,}" ; rem_minfree_1="${minfree_1%%,*}"
-            minfree_2="${minfree_1#*,}" ; rem_minfree_2="${minfree_2%%,*}"
-            minfree_3="${minfree_2#*,}" ; rem_minfree_3="${minfree_3%%,*}"
-            minfree_4="${minfree_3#*,}" ; rem_minfree_4="${minfree_4%%,*}"
-            minfree_5="${minfree_4#*,}"
+            # Calculate vmpressure_file_min as below & set for 64 bit:
+            # vmpressure_file_min = last_lmk_bin + (last_lmk_bin - last_but_one_lmk_bin)
+            if [ "$arch_type" == "aarch64" ]; then
+                minfree_series=`cat /sys/module/lowmemorykiller/parameters/minfree`
+                minfree_1="${minfree_series#*,}" ; rem_minfree_1="${minfree_1%%,*}"
+                minfree_2="${minfree_1#*,}" ; rem_minfree_2="${minfree_2%%,*}"
+                minfree_3="${minfree_2#*,}" ; rem_minfree_3="${minfree_3%%,*}"
+                minfree_4="${minfree_3#*,}" ; rem_minfree_4="${minfree_4%%,*}"
+                minfree_5="${minfree_4#*,}"
 
-            vmpres_file_min=$((minfree_5 + (minfree_5 - rem_minfree_4)))
-            echo $vmpres_file_min > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
-        else
-            # Set LMK series, vmpressure_file_min for 32 bit non-go targets.
-            # Disable Core Control, enable KLMK for non-go 8909.
-            if [ "$ProductName" == "msm8909" ]; then
-                disable_core_ctl
-                echo 1 > /sys/module/lowmemorykiller/parameters/enable_lmk
+                vmpres_file_min=$((minfree_5 + (minfree_5 - rem_minfree_4)))
+                echo $vmpres_file_min > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+            else
+                # Set LMK series, vmpressure_file_min for 32 bit non-go targets.
+                # Disable Core Control, enable KLMK for non-go 8909.
+                if [ "$ProductName" == "msm8909" ]; then
+                    disable_core_ctl
+                    echo 1 > /sys/module/lowmemorykiller/parameters/enable_lmk
+                fi
+            echo "15360,19200,23040,26880,34415,43737" > /sys/module/lowmemorykiller/parameters/minfree
+            echo 53059 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
             fi
-        echo "15360,19200,23040,26880,34415,43737" > /sys/module/lowmemorykiller/parameters/minfree
-        echo 53059 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
-        fi
 
-        # Enable adaptive LMK for all targets &
-        # use Google default LMK series for all 64-bit targets >=2GB.
-        echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+            # Enable adaptive LMK for all targets &
+            # use Google default LMK series for all 64-bit targets >=2GB.
+            echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+        fi
 
         # Enable oom_reaper
         if [ -f /sys/module/lowmemorykiller/parameters/oom_reaper ]; then
             echo 1 > /sys/module/lowmemorykiller/parameters/oom_reaper
+        elif [ -f /proc/sys/vm/reap_mem_on_sigkill ]; then
+            echo 1 > /proc/sys/vm/reap_mem_on_sigkill
         fi
 
         if [[ "$ProductName" != "bengal"* ]]; then
@@ -2374,8 +2168,8 @@ case "$target" in
                     8953_sched_dcvs_eas
                 else
                     8953_sched_dcvs_hmp
-                    echo 652800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
                 fi
+                echo 652800 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 
                 # Bring up all cores online
                 echo 1 > /sys/devices/system/cpu/cpu1/online
@@ -2628,30 +2422,28 @@ case "$target" in
 		# core_ctl is not needed for 8917. Disable it.
                 disable_core_ctl
 
-                if [ $KernelVersionA -le 4 ] && [ $KernelVersionB -le 9 ]; then
-                    for devfreq_gov in /sys/class/devfreq/qcom,mincpubw*/governor
-                    do
-                        echo "cpufreq" > $devfreq_gov
-                    done
+                for devfreq_gov in /sys/class/devfreq/qcom,mincpubw*/governor
+                do
+                    echo "cpufreq" > $devfreq_gov
+                done
 
-                    for devfreq_gov in /sys/class/devfreq/soc:qcom,cpubw/governor
+                for devfreq_gov in /sys/class/devfreq/soc:qcom,cpubw/governor
+                do
+                    echo "bw_hwmon" > $devfreq_gov
+                    for cpu_io_percent in /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/io_percent
                     do
-                        echo "bw_hwmon" > $devfreq_gov
-                        for cpu_io_percent in /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/io_percent
-                        do
-                            echo 20 > $cpu_io_percent
-                        done
-                    for cpu_guard_band in /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/guard_band_mbps
-                        do
-                            echo 30 > $cpu_guard_band
-                        done
+                        echo 20 > $cpu_io_percent
                     done
+                for cpu_guard_band in /sys/class/devfreq/soc:qcom,cpubw/bw_hwmon/guard_band_mbps
+                    do
+                        echo 30 > $cpu_guard_band
+                    done
+                done
 
-                    for gpu_bimc_io_percent in /sys/class/devfreq/soc:qcom,gpubw/bw_hwmon/io_percent
-                    do
-                        echo 40 > $gpu_bimc_io_percent
-                    done
-                fi
+                for gpu_bimc_io_percent in /sys/class/devfreq/soc:qcom,gpubw/bw_hwmon/io_percent
+                do
+                    echo 40 > $gpu_bimc_io_percent
+                done
 
                 # disable thermal core_control to update interactive gov settings
                 echo 0 > /sys/module/msm_thermal/core_control/enabled
@@ -2660,9 +2452,8 @@ case "$target" in
                     8917_sched_dcvs_eas
                 else
                     8917_sched_dcvs_hmp
-                    echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
                 fi
-
+                echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
                 # re-enable thermal core_control now
                 echo 1 > /sys/module/msm_thermal/core_control/enabled
 
@@ -2742,9 +2533,9 @@ case "$target" in
                     8937_sched_dcvs_eas
                 else
                     8937_sched_dcvs_hmp
-                    echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-                    echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
                 fi
+                echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+                echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
                 # Disable L2-GDHS low power modes
                 echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/idle_enabled
                 echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/suspend_enabled
@@ -2801,104 +2592,55 @@ case "$target" in
                 esac
 
                 # Apply settings for sdm429/sda429/sdm439/sda439
-                if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
 
-                    for device in /sys/devices/platform/soc
-                    do
-                        for cpubw in $device/*cpu-cpu-ddr-bw/devfreq/*cpu-cpu-ddr-bw
-                        do
-                            echo "bw_hwmon" > $cpubw/governor
-                            echo 85 > $cpubw/bw_hwmon/io_percent
-                            echo 0 > $cpubw/bw_hwmon/guard_band_mbps
-                        done
-                    done
-                else
-                    for cpubw in /sys/class/devfreq/*qcom,mincpubw*
-                    do
-                        echo "cpufreq" > $cpubw/governor
-                    done
+                for cpubw in /sys/class/devfreq/*qcom,mincpubw*
+                do
+                    echo "cpufreq" > $cpubw/governor
+                done
 
-                    for cpubw in /sys/class/devfreq/*qcom,cpubw*
-                    do
-                        echo "bw_hwmon" > $cpubw/governor
-                        echo 20 > $cpubw/bw_hwmon/io_percent
-                        echo 30 > $cpubw/bw_hwmon/guard_band_mbps
-                    done
+                for cpubw in /sys/class/devfreq/*qcom,cpubw*
+                do
+                    echo "bw_hwmon" > $cpubw/governor
+                    echo 20 > $cpubw/bw_hwmon/io_percent
+                    echo 30 > $cpubw/bw_hwmon/guard_band_mbps
+                done
 
-                    for gpu_bimc_io_percent in /sys/class/devfreq/soc:qcom,gpubw/bw_hwmon/io_percent
-                    do
-                        echo 40 > $gpu_bimc_io_percent
-                    done
-                fi
+                for gpu_bimc_io_percent in /sys/class/devfreq/soc:qcom,gpubw/bw_hwmon/io_percent
+                do
+                    echo 40 > $gpu_bimc_io_percent
+                done
 
                 case "$soc_id" in
                      "353" | "363" )
                      # Apply settings for sdm439/sda439
+                     # configure schedutil governor settings
+                     # enable governor for perf cluster
                      echo 1 > /sys/devices/system/cpu/cpu0/online
-                     echo 1 > /sys/devices/system/cpu/cpu4/online
+                     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
 
-                     if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-
-                         # memlat specific settings are moved to seperate file under
-                         # device/target specific folder
-                         setprop vendor.dcvs.prop 1
-
-                         # configure schedutil governor settings
-                         # enable governor for perf cluster
-                         echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
-
-                         #set the hispeed_freq
-                         echo 1497600 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
-                         echo 80 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_load
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
-                         echo 960000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-
-                         #input boost params
-                         echo 1497600 > /sys/module/cpu_boost/parameters/input_boost_freq
-                         echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-
-                         ## enable governor for power cluster
-                         echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/up_rate_limit_us
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/down_rate_limit_us
-
-                         #set the hispeed_freq
-                         echo 998400 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
-                         echo 85 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_load
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/rtg_boost_freq
-                         echo 768000 > /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq
-                     else
-                         # configure schedutil governor settings
-                         # enable governor for perf cluster
-                         echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-                         echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
-                         echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
-
-                         #set the hispeed_freq
-                         echo 1497600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
-                         echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
-                         echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-
-                         ## enable governor for power cluster
-                         echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-                         echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
-                         echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
-
-                         #set the hispeed_freq
-                         echo 998400 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
-                         echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
-                         echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-                     fi
-
+                     #set the hispeed_freq
+                     echo 1497600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
+                     echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+                     echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
                      # sched_load_boost as -6 is equivalent to target load as 85.
                      echo -6 > /sys/devices/system/cpu/cpu0/sched_load_boost
                      echo -6 > /sys/devices/system/cpu/cpu1/sched_load_boost
                      echo -6 > /sys/devices/system/cpu/cpu2/sched_load_boost
                      echo -6 > /sys/devices/system/cpu/cpu3/sched_load_boost
+
+                     ## enable governor for power cluster
+                     echo 1 > /sys/devices/system/cpu/cpu4/online
+                     echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+                     echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+
+                     #set the hispeed_freq
+                     echo 998400 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
+                     echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
+                     echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+                     # sched_load_boost as -6 is equivalent to target load as 85.
                      echo -6 > /sys/devices/system/cpu/cpu4/sched_load_boost
                      echo -6 > /sys/devices/system/cpu/cpu5/sched_load_boost
                      echo -6 > /sys/devices/system/cpu/cpu6/sched_load_boost
@@ -2942,39 +2684,14 @@ case "$target" in
                      # Apply settings for sdm429/sda429
                      # configure schedutil governor settings
                      echo 1 > /sys/devices/system/cpu/cpu0/online
+                     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
 
-                     if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 19 ]; then
-
-                         # memlat specific settings are moved to seperate file under
-                         # device/target specific folder
-                         setprop vendor.dcvs.prop 1
-
-                         echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us
-
-                         #set the hispeed_freq
-                         echo 1305600 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_freq
-                         echo 80 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/hispeed_load
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/pl
-                         echo 0 > /sys/devices/system/cpu/cpufreq/policy0/schedutil/rtg_boost_freq
-                         echo 960000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-                         #input boost params
-
-                         echo 1305600 > /sys/module/cpu_boost/parameters/input_boost_freq
-                         echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-                     else
-                         echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-
-                         echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
-                         echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
-
-                         #set the hispeed_freq
-                         echo 1305600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
-                         echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
-                         echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-                     fi
-
+                     #set the hispeed_freq
+                     echo 1305600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
+                     echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
+                     echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
                      # sched_load_boost as -6 is equivalent to target load as 85.
                      echo -6 > /sys/devices/system/cpu/cpu0/sched_load_boost
                      echo -6 > /sys/devices/system/cpu/cpu1/sched_load_boost
@@ -3116,9 +2833,6 @@ case "$target" in
                 start_hbtp
                 ;;
             esac
-
-	    # Disable cdsprpcd daemon for sdm630
-	    setprop vendor.fastrpc.disable.cdsprpcd.daemon 1
 
             # Setting b.L scheduler parameters
             echo 85 > /proc/sys/kernel/sched_upmigrate
@@ -3405,6 +3119,9 @@ case "$target" in
 
             # Turn on sleep modes.
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
+
+            # Log kernel wake-up source
+            echo 1 > /sys/module/msm_show_resume_irq/parameters/debug_mask
             ;;
         esac
     ;;
@@ -3645,14 +3362,23 @@ case "$target" in
       setprop vendor.dcvs.prop 1
 
             # cpuset parameters
-            echo 0-5 > /dev/cpuset/background/cpus
-            echo 0-5 > /dev/cpuset/system-background/cpus
+            specialcpu_enable=`getprop ro.vendor.config.scpu`
+            # Set default cpuset config without special cpu config
+            if [ "$specialcpu_enable" != "true" ]; then
+               echo 0-5 > /dev/cpuset/background/cpus
+               echo 0-5 > /dev/cpuset/system-background/cpus
+            fi
 
             # Turn off scheduler boost at the end
             echo 0 > /proc/sys/kernel/sched_boost
 
             # Turn on sleep modes.
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
+
+            # Log kernel wake-up source and clock info
+            echo 1 > /sys/module/msm_show_resume_irq/parameters/debug_mask
+            echo 1 > /sys/kernel/debug/clk/debug_suspend
+
             ;;
         esac
 
@@ -3763,7 +3489,7 @@ case "$target" in
             setprop vendor.dcvs.prop 1
 
             # cpuset parameters
-                echo 0-5 > /dev/cpuset/background/cpus
+                echo 0-3 > /dev/cpuset/background/cpus
                 echo 0-5 > /dev/cpuset/system-background/cpus
 
                 # Turn off scheduler boost at the end
@@ -3771,6 +3497,9 @@ case "$target" in
 
                 # Turn on sleep modes.
                 echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
+
+                # Log kernel wake-up source
+                echo 1 > /sys/module/msm_show_resume_irq/parameters/debug_mask
           ;;
         esac
 
@@ -4150,9 +3879,6 @@ case "$target" in
             echo 1056000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
             echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/rtg_boost_freq
 
-            echo "0:1017600" > /sys/devices/system/cpu/cpu_boost/input_boost_freq
-            echo 80 > /sys/devices/system/cpu/cpu_boost/input_boost_ms
-
 	    echo 1 > /proc/sys/kernel/sched_walt_rotate_big_tasks
 
             # sched_load_boost as -6 is equivalent to target load as 85. It is per cpu tunable.
@@ -4223,7 +3949,7 @@ case "$target" in
 
         # Scuba perf/power tunings
         case "$soc_id" in
-             "441" | "471" | "473" | "474" )
+             "441" )
 
             # Quad-core device. disable core_ctl
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
@@ -4280,10 +4006,18 @@ case "$target" in
                    echo 1600 > $cpubw/bw_hwmon/idle_mbps
                 done
 
-                # memlat specific settings are moved to seperate file under
-                # device/target specific folder
-                setprop vendor.dcvs.prop 1
+                for memlat in $device/*cpu*-lat/devfreq/*cpu*-lat
+                do
+                    echo "mem_latency" > $memlat/governor
+                    echo 10 > $memlat/polling_interval
+                    echo 400 > $memlat/mem_latency/ratio_ceil
+                done
 
+                for latfloor in $device/*cpu*-ddr-latfloor*/devfreq/*cpu-ddr-latfloor*
+                do
+                    echo "compute" > $latfloor/governor
+                    echo 10 > $latfloor/polling_interval
+                done
             done
 
             # Disable low power modes. Enable it after LPM stable
@@ -5258,18 +4992,9 @@ case "$target" in
     echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
     configure_memory_parameters
     target_type=`getprop ro.hardware.type`
-	if [ -f /sys/devices/soc0/soc_id ]; then
-                soc_id=`cat /sys/devices/soc0/soc_id`
-            else
-                soc_id=`cat /sys/devices/system/soc/soc0/id`
-            fi
 	if [ "$target_type" == "automotive" ]; then
            # update frequencies
-	   if [ "$soc_id" == "340" ] | [ "$soc_id" == "405" ]; then #sa8195
-		configure_automotive_sku_parameters_sa8195
-	   else #sa8155
-		configure_automotive_sku_parameters
-	   fi
+           configure_automotive_sku_parameters
 	fi
 
     ;;
@@ -5489,7 +5214,7 @@ case "$target" in
                 echo 2496000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
                 #setting max gpu freq to 530 MHz
                 echo 3 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-		echo 1804 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
+                echo {class:ddr, res:capped, val: 1804} > /sys/kernel/debug/aop_send_message
         elif [ $feature_id == 1 ] || [ $feature_id == 2 ]; then
                 echo "feature_id is 1 for external SA8195AB"
                 echo "feature_id is 2 for internal SA8195AB"
@@ -5498,7 +5223,7 @@ case "$target" in
                 echo 2496000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
                 #setting max gpu freq to 670 MHz
                 echo 0 > /sys/class/kgsl/kgsl-3d0/max_pwrlevel
-		echo 2092 > /sys/devices/platform/soc/soc:aop-set-ddr-freq/set_ddr_capped_freq
+                echo {class:ddr, res:capped, val: 2092} > /sys/kernel/debug/aop_send_message
         elif [ $feature_id == 3 ]; then
                 echo "feature_id is 3 for external SA8195AC"
         else
