@@ -67,7 +67,6 @@ persist.fuse_sdcard=true
 #System props for BT
 ro.bluetooth.library_name=libbluetooth_qti.so
 persist.vendor.btstack.aac_frm_ctl.enabled=true
-persist.bluetooth.sbc_hd_higher_bitrate=true
 
 #system prop for RmNet Data
 persist.rmnet.data.enable=true
