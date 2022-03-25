@@ -48,7 +48,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     FrameworksReshanoip \
-    SystemUIReshanoip \
+    SettingsReshanoip \
+    SystemUIReshanoip 
     
 # A/B
 AB_OTA_UPDATER := true
