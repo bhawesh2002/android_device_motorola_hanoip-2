@@ -84,6 +84,10 @@ persist.debug.wfd.enable=1
 ##property to choose between virtual/external wfd display
 persist.sys.wfd.virtual=0
 
+
+#property to enable HWC for VDS
+debug.sf.enable_hwc_vds=1
+
 #property to latch unsignaled buffer
 debug.sf.latch_unsignaled=1
 
@@ -162,6 +166,3 @@ ro.surface_flinger.set_idle_timer_ms=500
 ro.surface_flinger.set_touch_timer_ms=700
 ro.surface_flinger.use_content_detection_for_refresh_rate=true
 vendor.display.idle_time=1100
-
-# Graphics
-debug.sdm.support_writeback=0
