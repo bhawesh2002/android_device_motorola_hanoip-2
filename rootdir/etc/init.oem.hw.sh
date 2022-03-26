@@ -181,7 +181,7 @@ debug()
 notice()
 {
 	echo "$*"
-	echo "$scriptname: $*" > /dev/kmsg
+	log -t "$scriptname" -p i "$*"
 }
 
 add_device_params()
@@ -720,7 +720,7 @@ if [ "$xml_version" != "$version_fs" ]; then
 	[ -d $hw_mp/$ver_utag ] && $(echo "$xml_version" > $hw_mp/$ver_utag/ascii)
 fi
 
-set_ro_vendor_incremental &
+# set_ro_vendor_incremental &
 
 set_ro_hw_properties
 
