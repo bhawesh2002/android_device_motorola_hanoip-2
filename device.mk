@@ -444,9 +444,10 @@ PRODUCT_COPY_FILES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-    android.frameworks.sensorservice@1.0 \
-    android.hardware.sensors@2.0-service.multihal \
-    libsensorndkbridge
+    android.hardware.sensors@2.0 \
+    android.hardware.sensors@2.0.vendor \
+    android.hardware.sensors@2.0-impl \
+    android.hardware.sensors@2.0-service \
 
 # Soong namespaces
 QCOM_SOONG_NAMESPACE := $(LOCAL_PATH)
