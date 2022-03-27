@@ -1,5 +1,5 @@
 runtime_resource_overlay {
     name: "SettingsReshanoip",
     sdk_version: "current",
-    vendor: true
+    product: true
 }
