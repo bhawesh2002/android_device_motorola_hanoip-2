@@ -35,8 +35,10 @@ PRODUCT_SHIPPING_API_LEVEL := 30
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
-# Boot animation
+# Inherit some common Pixel Experience stuff.
+TARGET_GAPPS_ARCH := arm64
 TARGET_BOOT_ANIMATION_RES := 1080
+TARGET_INCLUDE_LIVE_WALLPAPERS := false
 
 # Build info
 BUILD_FINGERPRINT := "motorola/hanoip_retcn/hanoip:11/RRN31.Q3-1-11-6/f81cc:user/release-keys"
