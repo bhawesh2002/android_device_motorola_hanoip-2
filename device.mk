@@ -42,9 +42,11 @@ PRODUCT_PACKAGES += \
     NoCutoutOverlay
 
 PRODUCT_PACKAGES += \
-    FrameworksReshanoip \
-    SettingsReshanoip \
-    SystemUIReshanoip 
+    FrameworksReshanoip 
+
+# Overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-aosp
     
 # A/B
 AB_OTA_UPDATER := true
