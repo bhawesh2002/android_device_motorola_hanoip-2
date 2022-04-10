@@ -52,6 +52,9 @@ TARGET_KERNEL_CONFIG := vendor/hanoip_defconfig
 TARGET_KERNEL_CLANG_COMPILE := true
 SELINUX_IGNORE_NEVERALLOWS := true
 
+#properties
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
+
 # Kernel modules - Audio
 TARGET_MODULE_ALIASES += \
      adsp_loader_dlkm.ko:audio_adsp_loader.ko \
